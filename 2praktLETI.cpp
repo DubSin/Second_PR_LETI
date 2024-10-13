@@ -90,7 +90,7 @@ void show_same_avarage(int arr[], int size, int avg, bool is_sorted) {
         cout << "Indexes of same elements: ";
         for (int i = mid - sample_size; i < mid + sample_size + 1; i++) {
             if (arr[i] == avg) {
-                cout << i << "i";
+                cout << i << " ";
                 count++;
             }
         }
@@ -100,12 +100,26 @@ void show_same_avarage(int arr[], int size, int avg, bool is_sorted) {
     else {
         cout << "Indexes of same elements: ";
         for (int i = 0; i < size; i++) {
-            cout << i << "i";
-            count++;
+            if (arr[i] == avg){
+                cout << i << " ";
+                count++;
+            }
+            
         }
         cout << endl;
         cout << "Count of same elements: " << count << endl;
 
+    }
+}
+
+void make_sum_cur_next(int arr[], int size){
+    for(int i=0; i< size; i++){
+        if(i == size - 1){
+            arr[i] = arr[i] + arr[0];
+        }
+        else{
+            arr[i] = arr[i] + arr[i + 1];
+        }
     }
 }
 
@@ -125,7 +139,8 @@ int main() {
         cout << "6) Output quantity of elements more then b in sorted array(input b)" << endl;
         cout << "7) Find if your element in sorted array(input your element)" << endl;
         cout << "8) Swaps array elements (input element indexes)" << endl;
-        cout << "Enter action from 1 to 8 or e to exit: ";
+        cout << "9) Make every element in arrays as a sum of current and next element" << endl;
+        cout << "Enter action from 1 to 9 or e to exit: ";
         cin >> action;
         switch (action)
         {
@@ -175,9 +190,12 @@ int main() {
                 int avg = (array[0] + array[99]) / 2;
                 show_same_avarage(array, size, avg, is_sorted);
             }
-            else {
+            else  if (is_initialized) {
                 int avg = avarage_value(array, size);
                 show_same_avarage(array, size, avg, is_sorted);
+            }
+            else{
+                cout << "Array is not initialazed" << endl;
             }
             _getch();
             break;
@@ -253,6 +271,16 @@ int main() {
             }
             else {
                 cout << "Array is not initialized";
+            }
+            _getch();
+            break;
+        case '9':
+            if(is_initialized){
+                make_sum_cur_next(array, size);
+                show_array(array, size);
+            }
+            else{
+                cout << "Array is not initialized" << endl;
             }
             _getch();
             break;
