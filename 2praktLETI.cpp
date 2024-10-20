@@ -24,6 +24,32 @@ void quick_sort(int arr[], int size, int start, int end) {
     }
 }
 
+void insert_sort(int arr[], int size) {
+    int i, key, j;
+    for (i = 1; i < size; i++) {
+        key = arr[i];
+        j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+void buble_sort(int arr[], int size){
+    int temp;
+    for(int i=0; i < size; i++){
+        for (int j=0; j < size; j++){
+            if (arr[i] < arr[j]){
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}   
+
 void show_array(int arr[], int size) {
     cout << "Your array: ";
     for (int i = 0; i < size; i++) {
@@ -124,6 +150,7 @@ void make_sum_cur_next(int arr[], int size){
 }
 
 int main() {
+    srand(time(0));
     const int size = 100;
     char action = 's'; // начальное положение action
     int array[size]{};
@@ -159,11 +186,25 @@ int main() {
         case '2':
             if (is_initialized)
             {
+                char sort_action;
+                cout << "Select type of sort you want \n1)Buble sort \n2)Insert Sort \n3)Quick sort" << endl;
+                cin >> sort_action;
                 auto start_time = chrono::steady_clock::now();
-                quick_sort(array, size, 0, size - 1);
+                switch(sort_action){
+                    case '1':
+                        buble_sort(array, size);
+                        break;
+                    case '2':
+                        insert_sort(array, size);
+                        break;
+                    case '3':
+                        quick_sort(array, size, 0, size - 1);
+                        break;
+                }
                 auto end_time = chrono::steady_clock::now();
                 auto run_time = chrono::duration_cast<chrono::nanoseconds>(end_time - start_time);
                 cout << "runtime: " << run_time.count() << "ns" << endl;
+
                 show_array(array, size);
                 is_sorted = true;
             }
@@ -197,7 +238,7 @@ int main() {
             else{
                 cout << "Array is not initialazed" << endl;
             }
-            _getch();
+            cin.get();
             break;
         case '5':
             if (is_sorted) {
