@@ -186,24 +186,27 @@ int main() {
         case '2':
             if (is_initialized)
             {
-                char sort_action;
-                cout << "Select type of sort you want \n1)Buble sort \n2)Insert Sort \n3)Quick sort" << endl;
-                cin >> sort_action;
-                auto start_time = chrono::steady_clock::now();
-                switch(sort_action){
-                    case '1':
-                        buble_sort(array, size);
-                        break;
-                    case '2':
-                        insert_sort(array, size);
-                        break;
-                    case '3':
-                        quick_sort(array, size, 0, size - 1);
-                        break;
-                }
-                auto end_time = chrono::steady_clock::now();
-                auto run_time = chrono::duration_cast<chrono::nanoseconds>(end_time - start_time);
-                cout << "runtime: " << run_time.count() << "ns" << endl;
+                int array_2[size], array_3[size];
+                copy(array, array + size, array_2);
+                copy(array, array + size, array_3);
+                auto start_time_buble = chrono::steady_clock::now();
+                buble_sort(array_2, size);
+                auto end_time_buble = chrono::steady_clock::now();
+                auto run_time_buble = chrono::duration_cast<chrono::nanoseconds>(end_time_buble - start_time_buble);
+                cout << "Buble sort runtime: " << run_time_buble.count() << "ns" << endl;
+
+
+                auto start_time_insert = chrono::steady_clock::now();
+                insert_sort(array_3, size);
+                auto end_time_insert = chrono::steady_clock::now();
+                auto run_time_insert = chrono::duration_cast<chrono::nanoseconds>(end_time_insert - start_time_insert);
+                cout << "Insert sort runtime: " << run_time_insert.count() << "ns" << endl;
+
+                auto start_time_quick = chrono::steady_clock::now();
+                quick_sort(array, size, 0, size - 1);
+                auto end_time_quick = chrono::steady_clock::now();
+                auto run_time_quick = chrono::duration_cast<chrono::nanoseconds>(end_time_quick - start_time_quick);
+                cout << "Quick sort runtime: " << run_time_quick.count() << "ns" << endl;
 
                 show_array(array, size);
                 is_sorted = true;
@@ -228,17 +231,27 @@ int main() {
             break;
         case '4':
             if (is_sorted) {
+                auto start_time = chrono::steady_clock::now();
                 int avg = (array[0] + array[99]) / 2;
+                cout << "Avarage value: " << avg << endl;
                 show_same_avarage(array, size, avg, is_sorted);
+                auto end_time = chrono::steady_clock::now();
+                auto run_time = chrono::duration_cast<chrono::nanoseconds>(end_time - start_time);
+                cout << "runtime: " << run_time.count() << "ns" << endl;
             }
             else  if (is_initialized) {
+                auto start_time = chrono::steady_clock::now();
                 int avg = avarage_value(array, size);
+                cout << "Avarage value: " << avg << endl;
                 show_same_avarage(array, size, avg, is_sorted);
+                auto end_time = chrono::steady_clock::now();
+                auto run_time = chrono::duration_cast<chrono::nanoseconds>(end_time - start_time);
+                cout << "runtime: " << run_time.count() << "ns" << endl;
             }
             else{
                 cout << "Array is not initialazed" << endl;
             }
-            cin.get();
+            _getch();
             break;
         case '5':
             if (is_sorted) {
